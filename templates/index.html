@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Portal</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}"> <!-- Correct static path -->
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Hackathon Portal</h1>
+            <a href="{% url 'create_hackathon' %}"><button>Create Hackathon</button></a> <!-- Link to Django view -->
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Accelerate Innovation with Global Challenges</h2>
+            <p>Join our global hackathons to showcase your skills, learn from others, and earn rewards.</p>
+            <a href="{% url 'register_hackathon' %}"><button>Register Now</button></a> <!-- Link to Django view -->
+        </div>
+    </section>
+
+    <!-- Hackathons Listing Section -->
+    <section class="hackathons">
+        <div class="container">
+            <h2>Explore Challenges</h2>
+            <div class="search-bar">
+                <input type="text" id="search" placeholder="Search hackathons...">
+                <button id="filter">Filter</button>
+            </div>
+            <div class="hackathon-list" id="hackathon-list">
+                <!-- Hackathon cards will be dynamically inserted here using JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Hackathon Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script> <!-- Correct static path -->
+</body>
+
+</html>

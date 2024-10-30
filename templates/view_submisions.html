@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submissions</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}"> <!-- Link to your CSS file -->
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Submissions</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Summary</th>
+                <th>Type of Submission</th>
+                <th>Date Submitted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+            <tr>
+                <td>{{ submission.name }}</td>
+                <td>{{ submission.summary }}</td>
+                <td>{{ submission.get_submission_type_display }}</td>
+                <td>{{ submission.date_submitted|date:"F j, Y H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No submissions yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <!-- Optional: Add link to navigate back or to other pages -->
+    <a href="{% url 'home' %}">Back to Home</a>
+
+    <!-- Optional: Include JavaScript if needed -->
+    <script src="{% static 'js/script.js' %}"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>

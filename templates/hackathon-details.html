@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ hackathon.title }} - Hackathon Details</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}"> <!-- Assuming you're using static CSS -->
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>{{ hackathon.title }}</h1>
+            <button onclick="location.href='/register/{{ hackathon.id }}/'">Register for Hackathon</button>
+        </div>
+    </header>
+
+    <!-- Hackathon Details Section -->
+    <section class="hackathon-details">
+        <div class="container">
+            <div class="hackathon-image">
+                <img src="{{ hackathon.hackathon_image.url }}" alt="{{ hackathon.title }}">
+            </div>
+            <div class="hackathon-content">
+                <h2>About the Hackathon</h2>
+                <p>{{ hackathon.description }}</p>
+                <ul>
+                    <li><strong>Type of Submission:</strong> {{ hackathon.get_submission_type_display }}</li>
+                    <li><strong>Start Date:</strong> {{ hackathon.start_datetime }}</li>
+                    <li><strong>End Date:</strong> {{ hackathon.end_datetime }}</li>
+                    <li><strong>Reward Prize:</strong> {{ hackathon.reward_prize }}</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Submission Section (Visible to registered users) -->
+    {% if user.is_authenticated and is_registered %}
+    <section class="submission-section">
+        <div class="container">
+            <h2>Your Submissions</h2>
+            <form action="{% url 'submit_entry' hackathon.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="submission_name">Submission Name:</label>
+                    <input type="text" id="submission_name" name="submission_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="submission_summary">Submission Summary:</label>
+                    <textarea id="submission_summary" name="submission_summary" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="submission_file">Submit your {{ hackathon.get_submission_type_display }}:</label>
+                    {% if hackathon.submission_type == 'image' %}
+                    <input type="file" id="submission_file" name="submission_file" accept="image/*" required>
+                    {% elif hackathon.submission_type == 'file' %}
+                    <input type="file" id="submission_file" name="submission_file" required>
+                    {% elif hackathon.submission_type == 'link' %}
+                    <input type="url" id="submission_link" name="submission_link" placeholder="Enter the submission link" required>
+                    {% endif %}
+                </div>
+                <button type="submit">Submit Entry</button>
+            </form>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Hackathon Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
